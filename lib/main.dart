@@ -1,5 +1,3 @@
-import 'package:fittex/widgets/new_transaction.dart';
-import 'package:fittex/widgets/transaction_list.dart';
 import 'package:fittex/widgets/user_transaction.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,22 +24,24 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Avdonin app')),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              height: 100,
-              color: Colors.blue,
-              width: 300,
-              child: Card(
-                child: Text('Privet1'),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                height: 100,
+                color: Colors.blue,
+                width: 300,
+                child: Card(
+                  child: Text('Privet1'),
+                ),
               ),
             ),
-          ),
-          UserTransactions()
-        ],
+            UserTransactions()
+          ],
+        ),
       ),
     );
   }
