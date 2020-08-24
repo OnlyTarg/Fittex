@@ -1,15 +1,28 @@
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
-import '../widgets/user_transaction.dart';
+
 
 class NewTransaction extends StatelessWidget {
   Function _addTransaction;
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   NewTransaction(this._addTransaction);
 
-  final titleControler = TextEditingController();
-  final amountControler = TextEditingController();
+  void submitData() {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.parse(amountController.text);
+    if (enteredTitle.isEmpty || enteredAmount <= 0){
+      print("зашел в исключение");
+
+      return;
+    }
+    print('после исключения');
+
+
+    _addTransaction(enteredTitle, enteredAmount);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,19 +35,18 @@ class NewTransaction extends StatelessWidget {
           children: [
             TextField(
               decoration: InputDecoration(labelText: 'Наименование'),
-              controller: titleControler,
+              controller: titleController,
+              onSubmitted: (_) => submitData(),
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Цена'),
-              controller: amountControler,
+              controller: amountController,
+              onSubmitted: (_)=>submitData(),
             ),
             FlatButton(
               child: Text('Добавить покупку'),
               textColor: Colors.green,
-              onPressed: () {
-                _addTransaction(
-                    titleControler.text, double.parse(amountControler.text));
-              },
+              onPressed: submitData,
             )
           ],
         ),
