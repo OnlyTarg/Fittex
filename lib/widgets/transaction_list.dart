@@ -14,7 +14,7 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     
     return Container(
-      height: 300,
+      height: 700,
       child: SingleChildScrollView(
         child: Column(
           children: _userTransaction.map((tx) {
@@ -23,16 +23,16 @@ class TransactionList extends StatelessWidget {
               children: <Widget>[
                 Container(
                   child: Text(
-                    '\$${tx.amount}',
+                    '\$${tx.amount.toStringAsFixed(2)}',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: Colors.purple),
+                        color: Theme.of(context).primaryColor),
                   ),
                   margin: EdgeInsets.all(10),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.red, width: 2)),
+                      border: Border.all(color: Theme.of(context).primaryColor, width: 2)),
                 ),
                 Container(
                   child: Column(

@@ -14,9 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      theme: ThemeData(primarySwatch: Colors.green),
       home: MyHomePage(),
     );
   }
@@ -29,15 +27,14 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransaction = [
-    Transaction('1', 'Кросы', 15, DateTime.now()),
-    Transaction('2', 'Футюолка', 25, DateTime.now()),
+    /*Transaction('1', 'Кросы', 15, DateTime.now()),
+    Transaction('2', 'Футюолка', 25, DateTime.now()),*/
   ];
 
   void _addTransaction(String title, double price) {
     final newTx =
         Transaction(DateTime.now().toString(), title, price, DateTime.now());
-      print('добавлено' + newTx.title + ' - ' + newTx.amount.toString() );
-
+    print('добавлено' + newTx.title + ' - ' + newTx.amount.toString());
 
     setState(() {
       _userTransaction.add(newTx);
@@ -52,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Align(
+            /*Align(
               alignment: Alignment.centerLeft,
               child: Container(
                 height: 100,
@@ -62,24 +59,40 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Text('Privet1'),
                 ),
               ),
-            ),
-            TransactionList(_userTransaction)
+            ),*/
+            _userTransaction.isEmpty
+                ? Container(
+                    alignment: Alignment.center,
+                    child: Column(children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text('Nothing add yet'),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Image.asset(
+                        'assets/images/cat.jpg',
+                        fit: BoxFit.cover,
+                      )
+                    ]),
+                  )
+                : TransactionList(_userTransaction)
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        backgroundColor: Colors.green,
         onPressed: () {
           showModalBottomSheet(
               context: context,
               builder: (BuildContext blx) {
-                print('before '+'return new transaction');
+                print('before ' + 'return new transaction');
                 return NewTransaction(_addTransaction);
-
-
               });
         },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.green,
+
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
