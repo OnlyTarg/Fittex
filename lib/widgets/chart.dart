@@ -1,3 +1,4 @@
+import 'package:fittex/widgets/chart_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -10,7 +11,7 @@ class Chart extends StatelessWidget {
 
   List<Map<String, Object>> get groupedTransactionValues {
     return List.generate(7, (index) {
-      final  weekDay = DateTime.now().subtract(
+      final weekDay = DateTime.now().subtract(
         Duration(days: index),
       );
       var totalSum = 0.0;
@@ -30,9 +31,15 @@ class Chart extends StatelessWidget {
     });
   }
 
-  double get totalSpending {
+  /*double get totalSpending {
     return groupedTransactionValues.fold(0.0, (sum, item) {
       return sum + item['amount'];
+    });
+  }*/
+
+  double get totalSpending {
+    return groupedTransactionValues.fold(0.0, (sum, items) {
+      return sum + items['amount'];
     });
   }
 
@@ -43,11 +50,18 @@ class Chart extends StatelessWidget {
       margin: EdgeInsets.all(20),
       child: Padding(
         padding: EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: groupedTransactionValues.map((data) {
-            return Text('${data['day']} :  ${data['amount']}');
-          }).toList(),
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransactionValues.map((data) {
+              return Flexible(
+                fit: FlexFit.tight              ,
+                child: ChartBar(data['day'], data['amount'],
+                    (data['amount'] as double) / totalSpending),
+              );
+            }).toList(),
+          ),
         ),
       ),
     );

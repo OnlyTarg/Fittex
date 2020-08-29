@@ -4,7 +4,6 @@ import 'package:fittex/widgets/transaction_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 import 'models/transaction.dart';
 
 void main() {
@@ -20,7 +19,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.green),
+      theme: ThemeData(
+          primarySwatch: Colors.green,
+          accentColor: Colors.amber,
+          fontFamily: 'Quicksand',
+          textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+              button: TextStyle(color: Colors.white))),
       home: MyHomePage(),
     );
   }
@@ -43,10 +52,9 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  void _addTransaction(String title, double price) {
+  void _addTransaction(String title, double price, DateTime dateTime) {
     final newTx =
-        Transaction(DateTime.now().toString(), title, price, DateTime.now());
-    print('добавлено' + newTx.title + ' - ' + newTx.amount.toString());
+        Transaction(DateTime.now().toString(), title, price, dateTime);
 
     setState(() {
       _userTransaction.add(newTx);

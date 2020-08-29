@@ -2,17 +2,13 @@ import 'package:fittex/models/transaction.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 class TransactionList extends StatelessWidget {
-
   List<Transaction> _userTransaction;
-
 
   TransactionList(this._userTransaction);
 
   @override
   Widget build(BuildContext context) {
-    
     return Container(
       height: 700,
       child: SingleChildScrollView(
@@ -32,7 +28,8 @@ class TransactionList extends StatelessWidget {
                   margin: EdgeInsets.all(10),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      border: Border.all(color: Theme.of(context).primaryColor, width: 2)),
+                      border: Border.all(
+                          color: Theme.of(context).primaryColor, width: 2)),
                 ),
                 Container(
                   child: Column(
@@ -40,8 +37,8 @@ class TransactionList extends StatelessWidget {
                       Container(
                         child: Text(
                           tx.title,
-                          style:
-                              TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
