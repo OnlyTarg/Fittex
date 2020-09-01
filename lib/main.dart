@@ -41,6 +41,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool switchStatus = true;
+
   final List<Transaction> _userTransaction = [
     Transaction('1', 'Кросы', 15, DateTime.now()),
     Transaction('2', 'Футюолка', 25, DateTime.now()),
@@ -61,44 +63,58 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _delTransaction(String id) {
+    setState(() {
+      _userTransaction.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isLandscape = MediaQuery.of(context).orientation==Orientation.landscape;
+    final appBar = AppBar(title: Text('Avdonin app'));
+    var standartsize = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    final txListWidget = Container(
+        height: standartsize * 0.7,
+        child: TransactionList(_userTransaction, _delTransaction));
+
+
+
     return Scaffold(
-      appBar: AppBar(title: Text('Avdonin app')),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            Chart(_recentTransactions),
-            /*Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                height: 100,
-                color: Colors.blue,
-                width: 300,
-                child: Card(
-                  child: Text('Privet1'),
-                ),
-              ),
-            ),*/
-            _userTransaction.isEmpty
+            if (isLandscape) Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Show CHART'),
+                Switch(
+                    value: switchStatus,
+                    onChanged: (val) {
+                      setState(() {
+                        switchStatus = val;
+                      });
+                    })
+              ],
+            ),
+
+            if(!isLandscape) Container(
+                height: standartsize * 0.3,
+                child: Chart(_recentTransactions)),
+            if (!isLandscape)  txListWidget,
+            if (isLandscape)
+            switchStatus
                 ? Container(
-                    alignment: Alignment.center,
-                    child: Column(children: [
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text('Nothing add yet'),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Image.asset(
-                        'assets/images/cat.jpg',
-                        fit: BoxFit.cover,
-                      )
-                    ]),
-                  )
-                : TransactionList(_userTransaction)
+                    height: standartsize * 0.3,
+                    child: Chart(_recentTransactions))
+                : txListWidget,
           ],
         ),
       ),
